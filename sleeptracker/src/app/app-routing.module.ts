@@ -10,7 +10,19 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },  {
+    path: 'sleep-log',
+    loadChildren: () => import('./sleep-log/sleep-log.module').then( m => m.SleepLogPageModule)
   },
+  {
+    path: 'sleepiness-log',
+    loadChildren: () => import('./sleepiness-log/sleepiness-log.module').then( m => m.SleepinessLogPageModule)
+  },
+  {
+    path: 'view-data',
+    loadChildren: () => import('./view-data/view-data.module').then( m => m.ViewDataPageModule)
+  },
+
 ];
 
 @NgModule({
