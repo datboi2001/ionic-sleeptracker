@@ -1,5 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-icon name="moon" class="ion-margin-horizontal" size="large" slot="start"></ion-icon>
     <ion-title>
       CodeForBread Sleep Tracker
     </ion-title>
@@ -7,75 +8,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
+  <img src="assets/how-to-sleep-through-the-night_thumb.webp" alt="sleepy moon" class="home-image" >
+  <ion-grid class="ion-margin-vertical">
+    <ion-row class="ion-align-items-center ion-padding-vertical">
       <ion-col size="12">
-        <ion-button class="hidden" ></ion-button>
+        <ion-button routerLink="/sleep-log" expand="block"><ion-icon name="bed" size="large" slot="start"></ion-icon>
+        Log overnight sleep</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="ion-align-items-center ion-padding-vertical">
       <ion-col size="12">
-        <ion-button class="hidden"></ion-button>
+        <ion-button routerLink="/sleepiness-log" expand="block"><ion-icon name="school" size="large" slot="start"></ion-icon> Stanford Sleepiness</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="ion-align-items-center ion-padding-vertical">
       <ion-col size="12">
-        <ion-button class="hidden"></ion-button>
+        <ion-button routerLink="/view-data" expand="block"><ion-icon name="stats-chart" size="large" slot="start"></ion-icon> View data</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button class="hidden"></ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button class="hidden"></ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="12">
-        <ion-button routerLink="/sleep-log" expand="block">Log overnight sleep</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="12">
-        <ion-button routerLink="/sleepiness-log" expand="block">Stanford Sleepiness</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="12">
-        <ion-button routerLink="/view-data" expand="block">View data</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="hidden"></ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="hidden"></ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="hidden">
-
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="hidden">
-
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="hidden"></ion-button>
-      </ion-col>
-     </ion-row>
   </ion-grid>
 </ion-content>

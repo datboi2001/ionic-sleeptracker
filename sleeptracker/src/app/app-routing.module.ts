@@ -10,17 +10,18 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'sleep-log',
-    loadChildren: () => import('./sleep-log/sleep-log.module').then( m => m.SleepLogPageModule)
+    loadChildren: () => import('./pages/sleep-log/sleep-log.module').then(m => m.SleepLogPageModule)
   },
   {
     path: 'sleepiness-log',
-    loadChildren: () => import('./sleepiness-log/sleepiness-log.module').then( m => m.SleepinessLogPageModule)
+    loadChildren: () => import('./pages/sleepiness-log/sleepiness-log.module').then(m => m.SleepinessLogPageModule)
   },
   {
     path: 'view-data',
-    loadChildren: () => import('./view-data/view-data.module').then( m => m.ViewDataPageModule)
+    loadChildren: () => import('./pages/view-data/view-data.module').then(m => m.ViewDataPageModule)
   },
 
 ];

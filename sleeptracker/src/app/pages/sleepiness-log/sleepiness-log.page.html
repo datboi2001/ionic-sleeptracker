@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sleepiness log</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-margin-vertical main-grid">
+    <ion-row>
+      <ion-col>
+        <ion-range [(ngModel)]="loggedValue" min="1" max="7" step="1" snaps="true" color="primary">
+          <ion-label slot="start">1</ion-label>
+          <ion-label slot="end">7</ion-label>
+        </ion-range>
+      </ion-col>
+      <ion-col size="12">
+        <ion-label class="ion-text-center">Description: {{scaleValues[loggedValue]}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-padding-vertical">
+      <ion-col size="5">
+        <ion-label>Log time</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-datetime-button datetime="start-datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime [(ngModel)]="loggedDate" id="start-datetime" presentation="date-time" hourCycle="h23"
+                          [preferWheel]="true"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding">
+      <ion-col>
+        <ion-button (click)="onClick()" expand="block" color="primary">Submit log</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
