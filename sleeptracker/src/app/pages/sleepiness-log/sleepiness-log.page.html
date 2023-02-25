@@ -21,22 +21,22 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-align-items-center ion-padding-vertical">
-      <ion-col size="5">
-        <ion-label>Log time</ion-label>
-      </ion-col>
       <ion-col>
-        <ion-datetime-button datetime="start-datetime"></ion-datetime-button>
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime [(ngModel)]="loggedDate" id="start-datetime" presentation="date-time" hourCycle="h23"
-                          [preferWheel]="true"></ion-datetime>
-          </ng-template>
-        </ion-modal>
+        <ion-item>
+          <ion-label>Log time</ion-label>
+          <ion-datetime-button datetime="start-datetime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime [(ngModel)]="loggedDate" id="start-datetime" presentation="date-time" hourCycle="h23"
+                [preferWheel]="true"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding">
       <ion-col>
-        <ion-button (click)="onClick()" expand="block" color="primary">Submit log</ion-button>
+        <ion-button (click)="onSubmit()" expand="block" color="primary">Submit log</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

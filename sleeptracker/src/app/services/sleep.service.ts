@@ -2,36 +2,94 @@ import { Injectable } from '@angular/core';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
-
+import { Preferences } from '@capacitor/preferences';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SleepService {
-	private static LoadDefaultData:boolean = true;
-	public static AllSleepData:SleepData[] = [];
-	public static AllOvernightData:OvernightSleepData[] = [];
-	public static AllSleepinessData:StanfordSleepinessData[] = [];
+  private static LoadData: boolean = true;
+  public static AllOvernightData: OvernightSleepData[] = [];
+  public static AllSleepinessData: StanfordSleepinessData[] = [];
 
-	constructor() {
-		if(SleepService.LoadDefaultData) {
-			this.addDefaultData();
-		SleepService.LoadDefaultData = false;
-	}
-	}
+  constructor() {
+    if (SleepService.LoadData) {
+      this.loadDataFromStorage();
+      SleepService.LoadData = false;
+    }
+  }
+  // Load data from Capacitor storage
+  private async loadKeyFromStorage(key: string): Promise<any[] | null> {
+    try {
+      const { value } = await Preferences.get({ key: key });
+      if (value) {
+        return JSON.parse(value);
+      }
+      return null;
+    } catch (err) {
+      console.error('Unable to get value for key: ' + key, err);
+      return null;
+    }
+  }
 
-	private addDefaultData() {
-		this.logOvernightData(new OvernightSleepData(new Date('February 18, 2021 01:03:00'), new Date('February 18, 2021 09:25:00')));
-		this.logSleepinessData(new StanfordSleepinessData(4, new Date('February 19, 2021 14:38:00')));
-		this.logOvernightData(new OvernightSleepData(new Date('February 20, 2021 23:11:00'), new Date('February 21, 2021 08:03:00')));
-	}
+  // Load data from Capacitor storage on startup
+  private async loadDataFromStorage(): Promise<void> {
+    const overnightData = await this.loadKeyFromStorage('overnightData');
+    if (overnightData) {
+      overnightData.forEach((element) => {
+        const sleepStart = new Date(element.sleepStart);
+        const sleepEnd = new Date(element.sleepEnd);
+        SleepService.AllOvernightData.push(
+          new OvernightSleepData(sleepStart, sleepEnd)
+        );
+      });
+	  // Sort by sleepStart date
+    }
 
-	public logOvernightData(sleepData:OvernightSleepData) {
-		SleepService.AllSleepData.push(sleepData);
-		SleepService.AllOvernightData.push(sleepData);
-	}
+    const sleepinessData = await this.loadKeyFromStorage('sleepinessData');
+    if (sleepinessData) {
+      sleepinessData.forEach((element) => {
+        const sleepDate = new Date(element.sleepDate);
+        SleepService.AllSleepinessData.push(
+          new StanfordSleepinessData(element.sleepiness, sleepDate)
+        );
+      });
+    }
+  }
 
-	public logSleepinessData(sleepData:StanfordSleepinessData) {
-		SleepService.AllSleepData.push(sleepData);
-		SleepService.AllSleepinessData.push(sleepData);
-	}
+  public async saveDataToStorage(key: string, value = ''): Promise<void> {
+    try {
+      switch (key) {
+        case 'overnightData':
+          await Preferences.set({
+            key: key,
+            value: JSON.stringify(SleepService.AllOvernightData),
+          });
+          break;
+        case 'sleepinessData':
+          await Preferences.set({
+            key: key,
+            value: JSON.stringify(SleepService.AllSleepinessData),
+          });
+          break;
+
+        default:
+          await Preferences.set({
+            key: key,
+            value: value,
+          });
+      }
+    } catch (err) {
+      console.error('Unable to save value for key: ' + key, err);
+    }
+  }
+
+  public async logOvernightData(sleepData: OvernightSleepData) {
+    SleepService.AllOvernightData.push(sleepData);
+    await this.saveDataToStorage('overnightData');
+  }
+
+  public async logSleepinessData(sleepData: StanfordSleepinessData) {
+    SleepService.AllSleepinessData.push(sleepData);
+    await this.saveDataToStorage('sleepinessData');
+  }
 }

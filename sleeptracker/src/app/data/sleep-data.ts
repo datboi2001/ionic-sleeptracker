@@ -10,6 +10,16 @@ export class SleepData {
 		this.loggedAt = new Date();
 	}
 
+	// Getters
+	getId():string { return this.id; }
+	getLoggedAt():Date { return this.loggedAt; }
+
+	toJson() {
+		return {
+			id: this.id,
+			loggedAt: this.loggedAt.toISOString(),
+		} 
+	}
 	summaryString():string {
 		return 'Unknown sleep data';
 	}
