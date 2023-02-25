@@ -22,13 +22,25 @@ export class SleepinessLogPage implements OnInit {
 
   async onSubmit(){
     const loggedDate = new Date(this.loggedDate);
-    
+    const curDate = new Date(); 
     const loggedDateSeconds = loggedDate.getTime();
+    // Disallow logging sleepiness data in the future    
+
+    if (loggedDate > curDate){
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'You cannot log sleepiness data for the future.',
+        buttons: ['My bad!'],
+      });
+      await alert.present();
+      return;
+    }
+
     // Check that loggedDate does not overlap with any existing sleep data
     for (const sleepinessData of SleepService.AllSleepinessData){
       // Only allow users to log sleepiness data once per hour
       const curLoggedDate = sleepinessData.getLoggedAt().getTime();
-      if (curLoggedDate <= loggedDateSeconds && loggedDateSeconds <= curLoggedDate + 3600){
+      if (curLoggedDate <= loggedDateSeconds && loggedDateSeconds <= curLoggedDate + 3600000){
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'You have already logged sleepiness data for this hour.',
@@ -58,7 +70,7 @@ export class SleepinessLogPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Success',
       message: 'Your sleepiness data has been logged.',
-      buttons: ['OK'],
+      buttons: ['Thanks'],
     });
     await alert.present();
   }

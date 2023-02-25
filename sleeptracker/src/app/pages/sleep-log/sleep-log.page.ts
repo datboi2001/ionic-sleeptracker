@@ -33,6 +33,20 @@ export class SleepLogPage implements OnInit {
     // Get UTC timestamps 
     const sleepStartSeconds = sleepStart.getTime()
     const sleepEndSeconds = sleepEnd.getTime();
+
+    const curDate = new Date();
+
+    // Disallow logging sleep data in the future
+
+    if (sleepStart > curDate || sleepEnd > curDate) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'You cannot log sleep data for the future.',
+        buttons: ['My bad!'],
+      });
+      await alert.present();
+      return;
+    }
     // Handle invalid inputs
     if (sleepStart > sleepEnd) {
       const alert = await this.alertController.create({
