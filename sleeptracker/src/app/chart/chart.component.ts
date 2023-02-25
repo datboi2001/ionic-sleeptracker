@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { Chart, ChartConfiguration, ChartEvent, ChartType, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { default as Annotation } from 'chartjs-plugin-annotation';
@@ -9,11 +9,14 @@ import { default as Annotation } from 'chartjs-plugin-annotation';
   templateUrl: './chart.component.html',
   styleUrls: [ './chart.component.scss' ]
 })
-export class LineChartComponent {
+export class ChartComponent implements  OnInit{
   private newLabel? = 'New label';
 
   constructor() {
-    Chart.register(Annotation)
+    Chart.register(Annotation, ...registerables)
+  }
+
+  ngOnInit() {
   }
 
   public lineChartData: ChartConfiguration['data'] = {
@@ -57,6 +60,7 @@ export class LineChartComponent {
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
     elements: {
       line: {
         tension: 0.5
@@ -115,7 +119,7 @@ export class LineChartComponent {
   public randomize(): void {
     for (let i = 0; i < this.lineChartData.datasets.length; i++) {
       for (let j = 0; j < this.lineChartData.datasets[i].data.length; j++) {
-        this.lineChartData.datasets[i].data[j] = LineChartComponent.generateNumber(i);
+        this.lineChartData.datasets[i].data[j] = ChartComponent.generateNumber(i);
       }
     }
     this.chart?.update();
@@ -137,7 +141,7 @@ export class LineChartComponent {
 
   public pushOne(): void {
     this.lineChartData.datasets.forEach((x, i) => {
-      const num = LineChartComponent.generateNumber(i);
+      const num = ChartComponent.generateNumber(i);
       x.data.push(num);
     });
     this.lineChartData?.labels?.push(`Label ${ this.lineChartData.labels.length }`);

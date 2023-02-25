@@ -9,7 +9,7 @@ import { ChartConfiguration} from 'chart.js';
   styleUrls: ['./view-data.page.scss'],
 })
 export class ViewDataPage implements OnInit {
-  
+
   private curMonthSleepingData: OvernightSleepData[] = [];
   private curMonthSleepinessData: StanfordSleepinessData[] = [];
   private SleepingGraphData: ChartConfiguration['data'] = {
@@ -34,8 +34,11 @@ export class ViewDataPage implements OnInit {
   };
   public SleepDataCount: number = 0;
   public SleepinessDataCount: number = 0;
-  
-  constructor() { }
+
+  constructor() {
+    this.addDataToCurMonthData();
+    // this.prepareSleepinessData();
+  }
 
 
   private addDataToCurMonthData() {
@@ -77,13 +80,11 @@ export class ViewDataPage implements OnInit {
   }
 
   ngOnInit() {
-    this.addDataToCurMonthData();
-    this.prepareSleepinessData();
   }
 
   // Get the first 3 sleepiness logs (beginnning) of the month and the last 3 sleepiness logs of the month (end)
   // If the avg sleepiness of beginning is lower than then end, sleepiness scale is trending downwards (vice versa if higher)
-  // If +-0.25, [consistent], if between +-0.26 - 1, [trending slightly lower/higher], if between +-1 - 2 [trending lower/higher], 
+  // If +-0.25, [consistent], if between +-0.26 - 1, [trending slightly lower/higher], if between +-1 - 2 [trending lower/higher],
   // if greater than +- 2 [prominently lower/higher]
   public sleepinessAnalysis(): string {
     if (this.SleepinessDataCount < 6) {
