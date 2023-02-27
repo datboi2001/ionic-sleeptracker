@@ -80,6 +80,24 @@ export class ViewDataPage implements OnInit {
     })
   }
 
+  private prepareSleepData() {
+    let next_log;
+    let day = this.curMonthSleepingData[0].getLoggedAt().getDate();
+    let day_total = 0;
+    for (let i = 0; i < this.sleepDataCount; i++) {
+      next_log = this.curMonthSleepingData[i];
+      if (next_log.getLoggedAt().getDate() != day) {    // new day; log the total hours of sleep of the day and reset values
+        this.SleepingGraphData?.labels?.push(day);
+        this.SleepingGraphData.datasets[0].data.push(day_total);
+        day = next_log.getLoggedAt().getDate();
+        day_total = 0;
+      }
+      day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime())/ (1000*60*60));
+    }
+    this.SleepingGraphData?.labels?.push(day);
+    this.SleepingGraphData.datasets[0].data.push(day_total);
+  }
+
   private prepareSleepinessData() {
     let next_log;
     let day = this.curMonthSleepinessData[0].getLoggedAt().getDate();
@@ -102,6 +120,12 @@ export class ViewDataPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  // Get the average amount of sleep per day each month
+  // Display which day of the week has the most and the least sleep?
+  public sleepAnalysis(): string {
+    return "TODO";
   }
 
   // Get the first 3 sleepiness logs (beginnning) of the month and the last 3 sleepiness logs of the month (end)
@@ -155,6 +179,8 @@ export class ViewDataPage implements OnInit {
     return "In the past month, you have logged " + this.sleepinessDataCount.toString() + " sleepiness logs. Your sleepiness is " + sleepinesstrend + "You have been sleeping " + sleep_rating;
 
   }
+  
+
 
   ngOnDestroy(){
     this.sleepService.setLoadData(false);
