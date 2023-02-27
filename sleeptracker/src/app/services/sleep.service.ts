@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { Preferences } from '@capacitor/preferences';
@@ -18,6 +17,10 @@ export class SleepService {
     }
   }
   // Load data from Capacitor storage
+  public setLoadData(loadData: boolean) {
+    SleepService.LoadData = loadData;
+  }
+
   private async loadKeyFromStorage(key: string): Promise<any[] | null> {
     try {
       const { value } = await Preferences.get({ key: key });
@@ -48,9 +51,9 @@ export class SleepService {
     const sleepinessData = await this.loadKeyFromStorage('sleepinessData');
     if (sleepinessData) {
       sleepinessData.forEach((element) => {
-        const sleepDate = new Date(element.sleepDate);
+        const sleepDate = new Date(element.loggedAt);
         SleepService.AllSleepinessData.push(
-          new StanfordSleepinessData(element.sleepiness, sleepDate)
+          new StanfordSleepinessData(element.loggedValue, sleepDate)
         );
       });
     }

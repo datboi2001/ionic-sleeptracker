@@ -1,31 +1,5 @@
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Line Chart</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div>
-        <canvas baseChart class="chart"
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-      </div>
-    </ion-card-content>
-  </ion-card>
+<div>
+  <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+          [type]="lineChartType"></canvas>
+</div>
 
-  <table>
-    <tr>
-      <th *ngFor="let label of lineChartData.labels">{{label}}</th>
-    </tr>
-    <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
-      <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
-    </tr>
-  </table>
-  <div class="button-row">
-    <ion-button  (click)="randomize()">Randomize</ion-button>
-    <ion-button  (click)="pushOne()">Push</ion-button>
-    <ion-button  (click)="changeColor()">Recolor</ion-button>
-    <ion-button (click)="hideOne()">Toggle Series B</ion-button>
-    <ion-button (click)="changeLabel()">Change Label</ion-button>
-  </div>

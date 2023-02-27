@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" >
+    <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Sleep data analysis</ion-title>
@@ -9,6 +9,68 @@
 
 <ion-content>
 
- <app-chart></app-chart>
+  <ion-accordion-group class="ion-margin">
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        {{curDate.toLocaleString('default', {month: 'long'})}} sleepiness log
+      </ion-item>
+      <ion-item class="ion-justify-content-center ion-margin-vertical" slot="content">
+        <table>
+          <thead>
+          <tr>
+            <th>Logged time</th>
+            <th>Sleepiness scale</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of curMonthSleepinessData">
+            <td>{{intlApi.format(item.getLoggedAt())}}</td>
+            <td class="ion-text-center">{{item.getLoggedValue()}}</td>
+          </tr>
+        </table>
+      </ion-item>
+    </ion-accordion>
 
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        {{curDate.toLocaleString('default', {month: 'long'})}} sleeping log
+      </ion-item>
+      <ion-item slot="content" class="ion-margin-vertical">
+        <table>
+          <thead>
+          <tr>
+            <th>Sleep date</th>
+            <th>Sleep duration</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of curMonthSleepingData">
+            <td class="ion-text-center ion-padding-horizontal">{{item.dateString()}}</td>
+            <td class="ion-text-center">{{item.summaryString()}}</td>
+          </tr>
+        </table>
+      </ion-item>
+    </ion-accordion>
+
+  </ion-accordion-group>
+
+
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title>{{curDate.toLocaleString('default', {month: 'long'})}} sleepiness log</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-chart [lineChartData]="sleepinessGraphData"></app-chart>
+
+     {{sleepinessAnalysis()}}
+    </ion-card-content>
+  </ion-card>
+  <!--  <ion-card>-->
+  <!--    <ion-card-header>-->
+  <!--      <ion-card-title>{{curDate.toLocaleString('default', {month: 'long'})}} sleep cycle log</ion-card-title>-->
+  <!--    </ion-card-header>-->
+  <!--    <ion-card-content>-->
+  <!--      <app-chart></app-chart>-->
+  <!--    </ion-card-content>-->
+  <!--  </ion-card>-->
 </ion-content>

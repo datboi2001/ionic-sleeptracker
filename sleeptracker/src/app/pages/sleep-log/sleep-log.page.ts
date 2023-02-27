@@ -9,28 +9,21 @@ import { getIsoLocalTime } from 'src/app/util/util';
   styleUrls: ['./sleep-log.page.scss'],
 })
 export class SleepLogPage implements OnInit {
-  constructor(
-    private readonly sleep_service: SleepService,
-    private alertController: AlertController
-  ) {}
-
+  constructor(private readonly sleep_service: SleepService, private alertController: AlertController) {}
   // Get current time
-  public sleepLog = {
-    start_date: '',
-    end_date: '',
-  };
   private getIsoLocalTime = getIsoLocalTime;
+  public sleepLog = {
+    start_date: this.getIsoLocalTime(),
+    end_date: this.getIsoLocalTime(),
+  };
   ngOnInit() {
-    this.sleepLog.start_date = this.getIsoLocalTime();
-    this.sleepLog.end_date = this.getIsoLocalTime();
   }
 
-
   async onSubmit() {
-    
+
     const sleepStart = new Date(this.sleepLog.start_date);
     const sleepEnd = new Date(this.sleepLog.end_date);
-    // Get UTC timestamps 
+    // Get UTC timestamps
     const sleepStartSeconds = sleepStart.getTime()
     const sleepEndSeconds = sleepEnd.getTime();
 

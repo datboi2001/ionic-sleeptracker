@@ -13,18 +13,17 @@ export class SleepinessLogPage implements OnInit {
   scaleValues = StanfordSleepinessData.ScaleValues;
   private getIsoLocalTime = getIsoLocalTime;
   public loggedValue: number = 1;
-  public loggedDate: string = '';
-  constructor(private readonly sleepService: SleepService, private alertController: AlertController) { }
-
-  ngOnInit() {
-    this.loggedDate = this.getIsoLocalTime();
+  public loggedDate: string = this.getIsoLocalTime();
+  constructor(private readonly sleepService: SleepService, private alertController: AlertController) {
   }
+
+  ngOnInit() {}
 
   async onSubmit(){
     const loggedDate = new Date(this.loggedDate);
-    const curDate = new Date(); 
-    const loggedDateSeconds = loggedDate.getTime();
-    // Disallow logging sleepiness data in the future    
+    const curDate = new Date();
+    const loggedDateTimestamps = loggedDate.getTime();
+    // Disallow logging sleepiness data in the future
 
     if (loggedDate > curDate){
       const alert = await this.alertController.create({
@@ -40,7 +39,7 @@ export class SleepinessLogPage implements OnInit {
     for (const sleepinessData of SleepService.AllSleepinessData){
       // Only allow users to log sleepiness data once per hour
       const curLoggedDate = sleepinessData.getLoggedAt().getTime();
-      if (curLoggedDate <= loggedDateSeconds && loggedDateSeconds <= curLoggedDate + 3600000){
+      if (curLoggedDate <= loggedDateTimestamps && loggedDateTimestamps <= curLoggedDate + 3600000){
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'You have already logged sleepiness data for this hour.',
@@ -48,14 +47,14 @@ export class SleepinessLogPage implements OnInit {
         });
         await alert.present();
         return;
-      } 
-    }    
+      }
+    }
 
 
     for (const overnightData of SleepService.AllOvernightData) {
       const curSleepStart = overnightData.getSleepStart().getTime();
       const curSleepEnd = overnightData.getSleepEnd().getTime();
-      if (curSleepStart <= loggedDateSeconds && loggedDateSeconds <= curSleepEnd) {
+      if (curSleepStart <= loggedDateTimestamps && loggedDateTimestamps <= curSleepEnd) {
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'How can you log sleepiness data when you are asleep?',

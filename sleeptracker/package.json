@@ -28,7 +28,6 @@
     "@ionic/angular": "^6.1.9",
     "@jcesarmobile/ssl-skip": "0.2.0",
     "chart.js": "^4.2.1",
-    "chartjs-plugin-annotation": "^2.1.2",
     "ionicons": "^6.0.3",
     "ng2-charts": "^4.1.1",
     "rxjs": "~7.5.0",
