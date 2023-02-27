@@ -58,8 +58,12 @@ export class ViewDataPage implements OnInit {
 
   constructor() {
     this.addDataToCurMonthData();
-    if (this.sleepDataCount > 0) {this.prepareSleepinessData();}
-    if (this.sleepinessDataCount > 0) {this.prepareSleepData();}
+    if (this.sleepinessDataCount > 0) {
+      this.prepareSleepinessData();
+    }
+    if (this.sleepDataCount > 0) {
+      this.prepareSleepData();
+    }
   }
 
 
@@ -113,7 +117,7 @@ export class ViewDataPage implements OnInit {
         day = next_log.getSleepStart().getDate();
         day_total = 0;
       }
-      day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime())/ (36e5))
+      day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime()) / (36e5))
     }
     this.sleepingGraphData?.labels?.push(day);
     this.sleepingGraphData.datasets[0].data.push(day_total);
@@ -202,9 +206,4 @@ export class ViewDataPage implements OnInit {
     }
     return "In the past month, you have logged " + this.sleepinessDataCount.toString() + " sleepiness logs. Your sleepiness is " + sleepinesstrend + "You have been sleeping " + sleep_rating;
   }
-
-
-
 }
-
-

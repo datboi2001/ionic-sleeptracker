@@ -12,7 +12,7 @@
   <ion-accordion-group class="ion-margin">
     <ion-accordion value="first">
       <ion-item slot="header" color="light">
-        {{curDate.toLocaleString('default', {month: 'long'})}} sleepiness log
+        {{curDate.toLocaleString('default', {month: 'long'})}} sleepiness data
       </ion-item>
       <ion-item class="ion-justify-content-center ion-margin-vertical" slot="content">
         <table>
@@ -33,7 +33,7 @@
 
     <ion-accordion value="second">
       <ion-item slot="header" color="light">
-        {{curDate.toLocaleString('default', {month: 'long'})}} sleeping log
+        {{curDate.toLocaleString('default', {month: 'long'})}} sleeping data
       </ion-item>
       <ion-item slot="content" class="ion-margin-vertical">
         <table>
@@ -67,7 +67,7 @@
   </ion-card>
   <ion-card color="primary">
     <ion-card-header>
-      <ion-card-title>{{curDate.toLocaleString('default', {month: 'long'})}} sleep cycle log</ion-card-title>
+      <ion-card-title>{{curDate.toLocaleString('default', {month: 'long'})}} sleep duration log</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <app-chart [lineChartData]="sleepingGraphData"></app-chart>
