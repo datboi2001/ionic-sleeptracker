@@ -91,7 +91,7 @@ export class ViewDataPage implements OnInit {
 
   private prepareSleepData() {
     let next_log;
-    let day = this.curMonthSleepingData[0].getLoggedAt().getDate();
+    let day = this.curMonthSleepingData[0].getSleepStart().getDate();
     let total_hours = 0;
     let days = 0;
     this.maxCurMonthSleep = 0;
@@ -99,18 +99,24 @@ export class ViewDataPage implements OnInit {
     let day_total = 0;
     for (let i = 0; i < this.sleepDataCount; i++) {
       next_log = this.curMonthSleepingData[i];
-      if (next_log.getLoggedAt().getDate() != day) {    // new day; log the total hours of sleep of the day and reset values
-        this.SleepingGraphData?.labels?.push(day);
-        this.SleepingGraphData.datasets[0].data.push(day_total);
+      if (next_log.getSleepStart().getDate() != day) {    // new day; log the total hours of sleep of the day and reset values
+        this.sleepingGraphData?.labels?.push(day);
+        this.sleepingGraphData.datasets[0].data.push(day_total);
         total_hours += day_total;
         days += 1;
-        day = next_log.getLoggedAt().getDate();
+        if (day_total > this.maxCurMonthSleep) {
+          this.maxCurMonthSleep = day_total;
+        }
+        if (day_total < this.minCurMonthSleep) {
+          this.minCurMonthSleep = day_total;
+        }
+        day = next_log.getSleepStart().getDate();
         day_total = 0;
       }
       day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime())/ (36e5))
     }
-    this.SleepingGraphData?.labels?.push(day);
-    this.SleepingGraphData.datasets[0].data.push(day_total);
+    this.sleepingGraphData?.labels?.push(day);
+    this.sleepingGraphData.datasets[0].data.push(day_total);
     total_hours += day_total;
     days += 1;
     this.avgCurMonthSleep = total_hours / days;
@@ -143,7 +149,7 @@ export class ViewDataPage implements OnInit {
   // Get the average amount of sleep per day each month
   // Display which day of the week has the most and the least sleep?
   public sleepAnalysis(): string {
-    return "In the past month, on average you have slept " + this.avgCurMonthSleep.toString() + " hours a day. The maximum amount of sleep you got was " + this.maxCurMonthSleep.toString() + " hours and the minimum amount of sleep you got was " + this.minCurMonthSleep.toString() + " hours.";
+    return "In the past month, on average you have slept " + this.avgCurMonthSleep.toFixed(2).toString() + " hours a day. The maximum amount of sleep you got was " + this.maxCurMonthSleep.toFixed(2).toString() + " hours and the minimum amount of sleep you got was " + this.minCurMonthSleep.toFixed(2).toString() + " hours.";
   }
 
   // Get the first 3 sleepiness logs (beginnning) of the month and the last 3 sleepiness logs of the month (end)
