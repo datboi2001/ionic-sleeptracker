@@ -19,14 +19,18 @@ export class ViewDataPage implements OnInit {
   curMonthSleepingData: OvernightSleepData[] = [];
   curDate = new Date();
   curMonthSleepinessData: StanfordSleepinessData[] = [];
-  SleepingGraphData: ChartConfiguration['data'] = {
+  sleepingGraphData: ChartConfiguration['data'] = {
     datasets: [{
-      label: `Sleeping Data Cycle in ${this.curDate.toLocaleString('default', {month: 'long'})}`,
+      label: `Daily number of hours of sleep in ${this.curDate.toLocaleString('default', {month: 'long'})}`,
       data: [],
-      fill: true,
-      borderColor: 'rgb(32,100,226)',
-      pointBackgroundColor: '#FFF',
-      tension: 0.1
+      backgroundColor: 'rgba(250,250,250,0.5)',
+      fill: {
+        target: 'origin',
+        above: 'rgba(255,255,255,0.5)',
+      },
+      borderColor: 'rgb(10,12,12)',
+      tension: 0.1,
+      pointBackgroundColor: '#FFF'
     }],
     labels: [],
   };
@@ -52,9 +56,10 @@ export class ViewDataPage implements OnInit {
   public avgCurMonthSleep: number = 0;
 
 
-  constructor(private sleepService: SleepService) {
+  constructor() {
     this.addDataToCurMonthData();
-    this.prepareSleepinessData();
+    if (this.sleepDataCount > 0) {this.prepareSleepinessData();}
+    if (this.sleepinessDataCount > 0) {this.prepareSleepData();}
   }
 
 
@@ -97,24 +102,13 @@ export class ViewDataPage implements OnInit {
       if (next_log.getLoggedAt().getDate() != day) {    // new day; log the total hours of sleep of the day and reset values
         this.SleepingGraphData?.labels?.push(day);
         this.SleepingGraphData.datasets[0].data.push(day_total);
-        total_hours += day_total;
-        days += 1;
-        if (day_total > this.maxCurMonthSleep) {
-          this.maxCurMonthSleep = day_total;
-        }
-        if (day_total < this.minCurMonthSleep) {
-          this.minCurMonthSleep = day_total;
-        }
         day = next_log.getLoggedAt().getDate();
         day_total = 0;
       }
-      day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime())/ (1000*60*60));
+      day_total += ((next_log.getSleepEnd().getTime() - next_log.getSleepStart().getTime())/ (36e5))
     }
     this.SleepingGraphData?.labels?.push(day);
     this.SleepingGraphData.datasets[0].data.push(day_total);
-    total_hours += day_total;
-    days += 1;
-    this.avgCurMonthSleep = total_hours / days;
   }
 
   private prepareSleepinessData() {
@@ -196,14 +190,9 @@ export class ViewDataPage implements OnInit {
       sleep_rating = "great this past month! Keep it up!"
     }
     return "In the past month, you have logged " + this.sleepinessDataCount.toString() + " sleepiness logs. Your sleepiness is " + sleepinesstrend + "You have been sleeping " + sleep_rating;
-
   }
-  
 
 
-  ngOnDestroy(){
-    this.sleepService.setLoadData(false);
-  }
 
 }
 

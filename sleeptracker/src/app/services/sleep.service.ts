@@ -12,7 +12,9 @@ export class SleepService {
 
   constructor() {
     if (SleepService.LoadData) {
-      this.loadDataFromStorage();
+      this.loadDataFromStorage().then(r =>
+        console.log('Data loaded from storage')
+      );
       SleepService.LoadData = false;
     }
   }

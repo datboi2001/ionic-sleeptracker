@@ -62,17 +62,16 @@
     <ion-card-content>
       <app-chart [lineChartData]="sleepinessGraphData"></app-chart>
 
-     {{sleepinessAnalysis()}}
+      {{sleepinessAnalysis()}}
     </ion-card-content>
   </ion-card>
-  <ion-card>
+  <ion-card color="primary">
     <ion-card-header>
       <ion-card-title>{{curDate.toLocaleString('default', {month: 'long'})}} sleep cycle log</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <app-chart [lineChartData]="sleepinessGraphData"></app-chart>
-      
-        {{sleepAnalysis()}}
-      </ion-card-content>
-    </ion-card>
+    </ion-card-header>
+    <ion-card-content>
+      <app-chart [lineChartData]="sleepingGraphData"></app-chart>
+      {{sleepAnalysis()}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
