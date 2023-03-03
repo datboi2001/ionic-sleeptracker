@@ -102,6 +102,8 @@ export class ViewDataPage implements OnInit {
       if (next_log.getLoggedAt().getDate() != day) {    // new day; log the total hours of sleep of the day and reset values
         this.SleepingGraphData?.labels?.push(day);
         this.SleepingGraphData.datasets[0].data.push(day_total);
+        total_hours += day_total;
+        days += 1;
         day = next_log.getLoggedAt().getDate();
         day_total = 0;
       }
@@ -109,6 +111,9 @@ export class ViewDataPage implements OnInit {
     }
     this.SleepingGraphData?.labels?.push(day);
     this.SleepingGraphData.datasets[0].data.push(day_total);
+    total_hours += day_total;
+    days += 1;
+    this.avgCurMonthSleep = total_hours / days;
   }
 
   private prepareSleepinessData() {
