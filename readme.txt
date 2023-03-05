@@ -1,4 +1,4 @@
---Readme document for Datthew Nguyen + Kevin Fang , manhn3@uci.edu + klfang1@uci.edu,  + 81573919 --
+--Readme document for Datthew Nguyen + Kevin Fang , manhn3@uci.edu + klfang1@uci.edu, 61886297 + 81573919 --
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
@@ -51,15 +51,15 @@ The person can view their data with two graphs, each representing a summary of t
 
 
 11. Which feature choose--using a native device resource, backing up logged data, or both?
-We chose to use the native device resource, having the mobile app store sleep log data in local storage.
+We chose to back up logged data, having the mobile app store sleep log data in local storage.
 
 
 12. If you used a native device resource, what feature did you add? How does this feature change the app's experience for a user?
-
+N/A
 
 
 13. If you backed up logged data, where does it back up to?
-N/A
+It backs up to the phone's local storage.
 
 14. How does your app implement or follow principles of good mobile design?
 Our app implements good mobile design by providing a simple, yet effective initial view that leads to the app's core functions. Each of the 3 core components in the app include backtracking to the main page, and each component also has error checking specifically designed to prevent user error and/or malicious input, providing a satisfactory user experience.
