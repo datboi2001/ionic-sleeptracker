@@ -16,7 +16,11 @@ Link to demo video: https://drive.google.com/file/d/1N4pkLkfP-v8KuQ0RsizhFw4VViz
 
 
 3. What online resources did you consult when completing this assignment? (list specific URLs)
-N/A
+- https://ionicframework.com/
+- https://ionicthemes.com/tutorials/how-to-build-any-ionic-chart-or-visualization
+- https://www.chartjs.org/docs/latest/
+- https://www.joshmorony.com/adding-responsive-charts-graphs-to-ionic-2-applications/
+- https://stackoverflow.com/questions/40016333/ng2-charts-cant-bind-to-datasets-since-it-isnt-a-known-property-of-canvas
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
