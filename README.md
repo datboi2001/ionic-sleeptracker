@@ -1,4 +1,4 @@
-# Sleeptracker
+# Ionic sleep tracker
 
 This is an app that allows you to track your sleeping habits and analyzes your data with line chart
 
